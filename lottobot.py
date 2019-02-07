@@ -14,7 +14,7 @@ scratch_prices = {
     '1': 1000,
     '$': 100000
 }
-scratch_weights = [400, 190, 130, 50, 10]
+scratch_weights = [400, 190, 130, 30, 7]
 last_msg = None
 help_message = """
 Match 3 in a row to win.
@@ -140,7 +140,7 @@ class ScratchOff:
         # diagonals
         if self.arr[0][0] == self.arr[1][1] == self.arr[2][2]:
             profit += scratch_prices[self.arr[0][0]]
-        if self.arr[0][2] == self.arr[1][1] == self.arr[0][2]:
+        if self.arr[2][0] == self.arr[1][1] == self.arr[0][2]:
             profit += scratch_prices[self.arr[0][2]]
         return profit
 
