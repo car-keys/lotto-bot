@@ -49,8 +49,8 @@ def does_match_command(cmd, msg):
     if pattern.fullmatch(msg.lower()):
         return True
     return False
-    
-    
+
+
 def load_money_file():
     with open('moneys.txt', 'r') as f:
         pinnies = json.load(f)
@@ -99,7 +99,7 @@ async def scratchoff_sender(message):
     await client.send_message(message.channel, outmessage)
     write_player_money(message.author.id, new_money)
 
-    
+
 class ScratchOff:
     def __init__(self):
         arr = [[], [], []]
@@ -108,7 +108,7 @@ class ScratchOff:
                 choice = random.choices(scratch_symbols, scratch_weights, k=1)[0]
                 arr[i].append(choice)
         self.arr = arr
-        
+
     def get_message_text(self):
         out = '+------Scratch Off!-------+\n'
         out += '|      $$$                    $$$     |\n'
@@ -126,7 +126,7 @@ class ScratchOff:
         out += '|      $$$                    $$$     |\n'
         out += '+---------------------------+'
         return out
-    
+
     # calculates winnings from this ticket
     def get_winnings(self):
         profit = 0
@@ -140,7 +140,7 @@ class ScratchOff:
         # diagonals
         if self.arr[0][0] == self.arr[1][1] == self.arr[2][2]:
             profit += scratch_prices[self.arr[0][0]]
-        if self.arr[0][2] == self.arr[1][1] == self.arr[0][2]:
+        if self.arr[2][0] == self.arr[1][1] == self.arr[0][2]:
             profit += scratch_prices[self.arr[0][2]]
         return profit
 
@@ -150,7 +150,9 @@ class ScratchOff:
 def main():
     try:
         with open(KEY_PATH, 'r') as f:
-            key = f.read()
+            key = f.readlines()[0]
+            if key[-1] == '\n':
+                key = key[:-1]
     except OSError:
         print('You forgot to make the keyfile dummy. Make a key.txt one level above the bot')
         return
